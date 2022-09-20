@@ -1,17 +1,37 @@
 import os
+from datetime import datetime
 
-SRC_Path = input('What Directory Do you Wish To backup?\n')
-Backup_Type = input('Which Backup Type Would you like to perform?\n'
-                    'Write 1 To Perform A Full Backup Of Your Selected Directory\n'
-                    'Write 2 To Perform An Differential Backup\n')
+#Source og destination for backup
+dst = r"C:\Users\rueag\Desktop\DEST"
+src = r"C:\Users\rueag\Desktop\SRC"
 
-dst = r"C:\DEST"
-src = SRC_Path
+#Dags dato
+Dato = datetime.today()
+#Dags dato konverteret til string
+Datostr = Dato.strftime("%d/%m/%Y, %H:%M:%S")
 
-#de forskellige parametre efter XCOPY kan ændres alt efter hvordan man ønsker at tage sin backup
-#der findes officiel dokumentation på XCOPY kommandoen fra microsoft
+# Er det full-backupdag(tirsdag)? (0 = Man, 1 = Tir, 2 = Ons ...)
+if datetime.today().weekday() == 1 or datetime.today().weekday() == 3:
+    Backup_Type = "1"
 
+#Hvis det ikke er tirsdag eller torsdag....
+else:
+    Backup_Type = "2"
+
+#Full backup
 if Backup_Type == "1":
-    print (os.system("xcopy %s %s" % (src, dst)))
+    (os.system("xcopy %s %s /f /y" % (src, dst)))
+    #Der føres en simpel log til en TXT fil på destinationen
+    #Filen oprettes hvis den ikke allerede eksisterer
+    f = open(r"C:\Users\rueag\Desktop\DEST\Backuplog.txt", "a")
+    f.write("\nFull backup was performed ")
+    f.write(Datostr)
+    f.close()
 
-else: print("Does Not Compute Seymore")
+#Differential backup
+if Backup_Type == "2":
+    (os.system("xcopy %s %s /f /y /d" % (src, dst)))
+    f = open(r"C:\Users\rueag\Desktop\DEST\Backuplog.txt", "a")
+    f.write("\nDifferential backup was performed ")
+    f.write(Datostr)
+    f.close()
