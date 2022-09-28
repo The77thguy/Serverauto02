@@ -1,4 +1,4 @@
-# Backupscript
+# Brugerdrevet Backupscript
 Dette backupscript benytter sig af Microsoft XCopy funktionalitet, til at hjælpe dig med at sikre dine filer, ved at back disse op til en backuplokation.
 
 ## "Brugsanvisning"
@@ -24,3 +24,24 @@ Dette script er **ikke** fuld-automatisk, og du skal køre scriptet manuelt **Hv
 Dette script kræver **brugerinput** for at udføre sin funktion, og er derfor **ikke velegnet til at blive automatiseret** via for eksempel Windows Task Scheduler.
 
 Når konsollen viser outputtet **processing........**, hver her opmærksom på, at operationen er **kodet til at tage 8 sekunder**, og du kan **ikke** reducere denne tid ved at opgradere hardwaren i din maskine. Forfatter af scriptet står inde for, at brugen af scriptet er ***cirka*** 80 procent mere "hacker-film-fra-halvfemserne" agtigt med denne forsinkelse, og denne er derfor ikke et feature, som scripted kan anses for værende funktionel foruden. 
+
+# Automatisk Backupscript
+Dette backupscript benytter sig af den samme XCOPY funktion, som i den brugerdrevne version. Forskellen på de to er, at dette script ikke krever input fra brugeren på noget tidspunkt, men i stedet aflæser dags dato fra dit system, hvorefter der foretages full backup Tirsdag og Torsdag, mens der alle andre dage foretages en differential backup. Se ovenstående afsnit om **Backup termenologi**, for indblik i forskellen på de to backup typer.
+
+## Brugsanvisning
+Dette script er tiltænk brug i sammenhæng med windows task scheduler. Når scriptet køres vil der blive foretaget en backup, såfremt python er installeret på systemet.
+For info omkring opsætning af Task Scheduler, henvises der til denne guide af Jean-Christophe Chouinard, på hans hjemmeside her: **https://www.jcchouinard.com/python-automation-using-task-scheduler/**
+
+Det anbefales at scripted skemalægges til at køre på at fastsat tidspunkt, for eksempel:
+1: Før fastlagte pauser
+2: Før fyraften
+3: Før planlagt systemvedligeholdelse
+
+## Advarsler
+Hver opmærksom på, at dette script benytter datetime fra **det system det køres på**. Hvis tid ikke er synkroniseret på tværs af maskiner som dette script køres på, kan der forekommer afvigelser af hvilke dage diverse maskiner foretager henholdsvist full og differential backup.
+
+Windows Task Scheduler besider ikke en mulighed for at foretage en task i forbindelse med nedlukning af systemet. Dette betyder bruger skal være opmærksom på, at der kan være gået markant tid siden sidste foretagede backup, når systemet lukkes ned. 
+
+Opgradering fra Windows 10 til Windows 11 har for visse brugere ført til tab at scheduled tasks, hver opmærksom på dette ved opgradering, og tjek at scriptet stadig er skemalagt, efter opgraderingen er fuldendt.
+
+Skift af licensnøgle har for visse brugere medført tab af scheduled tasks, så det anbefales at der tjekkes for om scripted stadig er skemalagt, i forbindelse med alle skift af licens nøgler.
