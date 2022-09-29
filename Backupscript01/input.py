@@ -5,8 +5,11 @@ import sys
 
 def delay_print(s):
     for c in s:
+        ##sys.stdout.write skriver ud i en stream, hvilket betyder du kan bearbejde tegn i strings individuelt
         sys.stdout.write(c)
+        ##flush stopper processen i at skrive strengen ud, så en anden handling kan skydes ind
         sys.stdout.flush()
+        ##vi venter 0.2 sekunder mellem hvert symbol i string
         time.sleep(0.20)
 
 exitstatement = 'nono'
